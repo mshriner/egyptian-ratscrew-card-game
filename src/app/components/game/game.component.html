@@ -1,3 +1,29 @@
-<div class="game-canvas">
-  <img [src]="'/svg-cards/c2.svg'" width="100px" />
+<div id="game-canvas" class="game-canvas" #gameCanvas>
+  @for (card of CARDS; track $index) {
+  <img
+    class="fixed"
+    [ngSrc]="'/svg-cards/' + card + '.svg'"
+    width="168"
+    height="244"
+    priority
+    hidden
+  />
+  }
+
+  <app-card
+    whichCard=""
+    #animationCard
+    [@deal]="cardAnimation"
+    (@deal.done)="nextDeal($event)"
+  ></app-card>
+
+  @for (cardOnScreen of cardsOnScreen; track $index) {
+  <app-card
+    [angleDegrees]="cardOnScreen.angleDegrees"
+    [hidden]="cardOnScreen.hidden"
+    [xPercent]="cardOnScreen.xPercent"
+    [yPercent]="cardOnScreen.yPercent"
+    [zIndex]="1"
+  ></app-card>
+  }
 </div>

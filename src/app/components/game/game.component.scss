@@ -2,4 +2,11 @@
   width: 100svw;
   height: 100svh;
   overflow: hidden;
+  background-color: green;
+}
+
+.fixed {
+  position: fixed;
+  top: 16px;
+  left: 16px;
 }
