@@ -8,7 +8,7 @@ import { CARD_BACK } from '../../models/constants';
 })
 export class CardComponent {
   @Input()
-  public whichCard: string = CARD_BACK;
+  public whichCard?: string = CARD_BACK;
   @Input()
   public xPercent: number = 50;
   @Input()
@@ -17,8 +17,6 @@ export class CardComponent {
   public zIndex: number = 1;
   @Input()
   public angleDegrees: number = 0;
-  @Input()
-  public transitionMs: number = 0;
   @Input()
   public hide?: boolean;
 }

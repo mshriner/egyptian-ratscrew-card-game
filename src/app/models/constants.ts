@@ -18,39 +18,35 @@ console.log(CARDS);
 
 export const PLAYERS: CardInfo[] = [
   {
-    // dummy card
+    // dummy card / starting deck
+    // keep this card hidden (after dealing) to make player indexes more intuitive,
     xPercent: 50,
     yPercent: 50,
     angleDegrees: 0,
-    hidden: false, // keep this card hidden (after dealing) to make player indexes more intuitive,
     numberOfCards: 52,
   },
   {
     xPercent: 50,
     yPercent: 85,
     angleDegrees: 0,
-    hidden: true, // Player 1 (you)
-    numberOfCards: 0,
+    numberOfCards: 0, // Player 1 (you)
   },
   {
     xPercent: 10,
     yPercent: 50,
     angleDegrees: 0,
-    hidden: true, // Player 2
-    numberOfCards: 0,
+    numberOfCards: 0, // Player 2
   },
   {
     xPercent: 50,
     yPercent: 15,
     angleDegrees: 0,
-    hidden: true, // Player 3
-    numberOfCards: 0,
+    numberOfCards: 0, // Player 3
   },
   {
     xPercent: 90,
     yPercent: 50,
     angleDegrees: 0,
-    hidden: true, // Player 4
-    numberOfCards: 0,
+    numberOfCards: 0, // Player 4
   },
 ];

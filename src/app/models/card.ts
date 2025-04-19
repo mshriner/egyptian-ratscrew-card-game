@@ -2,6 +2,6 @@ export interface CardInfo {
   xPercent: number;
   yPercent: number;
   angleDegrees: number;
-  hidden?: boolean;
-  numberOfCards?: number;
+  whichCard?: string;
+  numberOfCards: number;
 }

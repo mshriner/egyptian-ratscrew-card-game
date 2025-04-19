@@ -1,39 +1,38 @@
+import {
+  animate,
+  AnimationEvent,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   AfterViewInit,
-  ApplicationRef,
   ChangeDetectorRef,
   Component,
-  createComponent,
   ElementRef,
   inject,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { CARD_BACK, CARDS, PLAYERS } from '../../models/constants';
-import { CardComponent } from '../card/card.component';
-import { CardInfo } from '../../models/card';
 import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-  AnimationEvent,
-} from '@angular/animations';
-import {
-  DEAL_CARDS,
+  DEAL_CARDS_4_PLAYERS,
   DEAL_CARDS_ANIMATION_STYLE,
   DealAnimationState,
 } from '../../models/animations';
+import { CardInfo } from '../../models/card';
+import { CARD_BACK, CARDS, PLAYERS } from '../../models/constants';
+import { CardStackComponent } from '../card-stack/card-stack.component';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'app-game',
-  imports: [NgOptimizedImage, CardComponent, CommonModule],
+  imports: [NgOptimizedImage, CardComponent, CommonModule, CardStackComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
   animations: [
-    trigger('deal', [
+    trigger('cardMove', [
       state(
         'centered',
         style({ position: 'absolute', top: '50%', left: '50%', zIndex: '3' })
@@ -104,10 +103,11 @@ export class GameComponent implements AfterViewInit {
   public cardAnimation: DealAnimationState = 'hidden';
   private dealAnimationIndex = -1;
 
-  public cardsOnScreen: CardInfo[] = [];
+  public players: CardInfo[] = [];
+  public cardsInPile: CardInfo[] = [];
 
   constructor(private changeDetection: ChangeDetectorRef) {
-    this.cardsOnScreen = JSON.parse(JSON.stringify(PLAYERS));
+    this.players = JSON.parse(JSON.stringify(PLAYERS));
   }
 
   public ngAfterViewInit(): void {
@@ -123,11 +123,22 @@ export class GameComponent implements AfterViewInit {
       return;
     }
     this.dealAnimationIndex++;
-    if (this.dealAnimationIndex < DEAL_CARDS.length) {
+    if (this.dealAnimationIndex < DEAL_CARDS_4_PLAYERS.length) {
       console.log('next');
-      this.cardAnimation = DEAL_CARDS[this.dealAnimationIndex];
+      this.cardAnimation = DEAL_CARDS_4_PLAYERS[this.dealAnimationIndex];
     } else {
       console.log('done');
+    }
+    if (event?.fromState?.includes('Player1')) {
+      this.players[1].numberOfCards++;
+    } else if (event?.fromState?.includes('Player2')) {
+      this.players[2].numberOfCards++;
+    } else if (event?.fromState?.includes('Player3')) {
+      this.players[3].numberOfCards++;
+    } else if (event?.fromState?.includes('Player4')) {
+      this.players[4].numberOfCards++;
+    } else if (event?.fromState?.includes('centered')) {
+      this.players[0].numberOfCards--;
     }
   }
 }

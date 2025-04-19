@@ -13,17 +13,22 @@
   <app-card
     whichCard=""
     #animationCard
-    [@deal]="cardAnimation"
-    (@deal.done)="nextDeal($event)"
+    [@cardMove]="cardAnimation"
+    (@cardMove.done)="nextDeal($event)"
   ></app-card>
 
-  @for (cardOnScreen of cardsOnScreen; track $index) {
+  @for (cardInPile of cardsInPile; track $index) {
   <app-card
-    [angleDegrees]="cardOnScreen.angleDegrees"
-    [hidden]="cardOnScreen.hidden"
-    [xPercent]="cardOnScreen.xPercent"
-    [yPercent]="cardOnScreen.yPercent"
-    [zIndex]="1"
+    [xPercent]="cardInPile.xPercent"
+    [yPercent]="cardInPile.yPercent"
+    [angleDegrees]="cardInPile.angleDegrees"
+    [whichCard]="cardInPile.whichCard"
   ></app-card>
+  } @for (player of players; track $index) {
+  <app-card-stack
+    [xPercent]="player.xPercent"
+    [yPercent]="player.yPercent"
+    [numberOfCards]="player.numberOfCards"
+  ></app-card-stack>
   }
 </div>
