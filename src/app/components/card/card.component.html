@@ -1,12 +1,11 @@
-@if (!hide && whichCard) {
+@if (whichCard) {
 <img
   class="card"
   [src]="'/svg-cards/' + whichCard + '.svg'"
-  width="168"
-  height="244"
   [style.left.%]="xPercent"
   [style.top.%]="yPercent"
   [style.zIndex]="zIndex"
   [style.transform]="'translate(-50%, -50%) rotate(' + angleDegrees + 'deg)'"
+  [style.display]="hide ? 'none' : 'block'"
 />
 }
