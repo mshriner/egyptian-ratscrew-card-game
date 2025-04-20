@@ -10,10 +10,12 @@
   />
   }
 
+  {{ players | json }}
+
   <app-card
     whichCard=""
     #animationCard
-    [@cardMove]="cardAnimation"
+    [@cardMove]="cardAnimation()"
     (@cardMove.done)="nextDeal($event)"
   ></app-card>
 

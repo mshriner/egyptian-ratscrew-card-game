@@ -9,20 +9,25 @@ import {
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
-  ElementRef,
+  effect,
   inject,
-  ViewChild,
+  signal,
+  viewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { cloneDeep } from 'lodash';
 import {
+  DEAL_CARDS_2_PLAYERS,
+  DEAL_CARDS_3_PLAYERS,
   DEAL_CARDS_4_PLAYERS,
   DEAL_CARDS_ANIMATION_STYLE,
   DealAnimationState,
 } from '../../models/animations';
 import { CardInfo } from '../../models/card';
 import { CARD_BACK, CARDS, PLAYERS } from '../../models/constants';
+import { GameState } from '../../models/game-state';
 import { CardStackComponent } from '../card-stack/card-stack.component';
 import { CardComponent } from '../card/card.component';
 
@@ -89,31 +94,36 @@ import { CardComponent } from '../card/card.component';
       transition('* => centered', [animate('0ms')]),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameComponent implements AfterViewInit {
   public CARDS = CARDS;
+  private gameAnimations: DealAnimationState[];
 
   vcr = inject(ViewContainerRef);
 
-  @ViewChild('gameCanvas')
-  gameCanvas!: ElementRef<HTMLDivElement>;
-
-  @ViewChild('animationCard')
-  animationCard!: CardComponent;
-  public cardAnimation: DealAnimationState = 'hidden';
+  animationCard = viewChild.required(CardComponent);
+  public cardAnimation = signal<DealAnimationState>('hidden');
   private dealAnimationIndex = -1;
+  private gamePhase = signal<GameState>(GameState.DEAL);
 
   public players: CardInfo[] = [];
   public cardsInPile: CardInfo[] = [];
 
-  constructor(private changeDetection: ChangeDetectorRef) {
-    this.players = JSON.parse(JSON.stringify(PLAYERS));
+  constructor() {
+    this.players = cloneDeep(PLAYERS);
+    this.gameAnimations = DEAL_CARDS_2_PLAYERS;
+    effect(() => {
+      if (this.gamePhase() === GameState.PLAY) {
+        // this.cardAnimation.whichCard = CARD_BACK;
+        // this.cardAnimation.hide = true;
+      }
+    });
   }
 
   public ngAfterViewInit(): void {
-    console.log(this.gameCanvas);
     setTimeout(() => {
-      this.animationCard.whichCard = CARD_BACK;
+      this.animationCard().whichCard = CARD_BACK;
       this.nextDeal();
     }, 3000);
   }
@@ -123,11 +133,10 @@ export class GameComponent implements AfterViewInit {
       return;
     }
     this.dealAnimationIndex++;
-    if (this.dealAnimationIndex < DEAL_CARDS_4_PLAYERS.length) {
-      console.log('next');
-      this.cardAnimation = DEAL_CARDS_4_PLAYERS[this.dealAnimationIndex];
+    if (this.dealAnimationIndex < this.gameAnimations.length) {
+      this.cardAnimation.set(this.gameAnimations[this.dealAnimationIndex]);
     } else {
-      console.log('done');
+      this.gamePhase.set(GameState.PLAY);
     }
     if (event?.fromState?.includes('Player1')) {
       this.players[1].numberOfCards++;

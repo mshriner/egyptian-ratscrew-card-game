@@ -41,7 +41,7 @@ export const PLAYERS: CardInfo[] = [
     xPercent: 50,
     yPercent: 15,
     angleDegrees: 0,
-    numberOfCards: 0, // Player 3
+    numberOfCards: 0, // Player 3 (or 2 in 2 player game)
   },
   {
     xPercent: 90,

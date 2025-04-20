@@ -1,6 +1,9 @@
-.card {
+.card-variable-size {
   position: absolute;
   max-width: 20svw;
   max-height: 20svh;
   aspect-ratio: 168 / 244;
+}
+.card {
+  position: absolute;
 }
