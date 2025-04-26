@@ -1,0 +1,29 @@
+<app-card-stack
+  [xPercent]="player().xPercent"
+  [yPercent]="player().yPercent"
+  [numberOfCards]="player().cards.length"
+></app-card-stack>
+@if (playerNumber()) {
+  <img
+    class="hand"
+    src="/raised-back-of-hand.svg"
+    xPercent="50"
+    yPercent="50"
+    angleDegrees="0"
+    [@handMove]="handAnimation()"
+    (@handMove.start)="handAnimationStart($event)"
+    (@handMove.done)="handAnimationDone($event)"
+    width="85px"
+    height="120px"
+    style.left.%="{{
+      player().xPercent + (playerNumber() % 2) * -12 * (playerNumber() - 2)
+    }}"
+    style.top.%="{{
+      player().yPercent +
+        ((playerNumber() - 1) % 2) * -15 * (playerNumber() - 3)
+    }}"
+    style.transform="
+      {{ 'translate(-50%, -50%) rotate(' + (playerNumber() - 1) * 90 + 'deg)' }}
+    "
+  />
+}

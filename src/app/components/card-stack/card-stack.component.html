@@ -1,7 +1,8 @@
-@for (item of MAX_CARDS_ARR ; track $index) {
-<app-card
-  [xPercent]="xPercent - stackCardXOffsets[$index]"
-  [yPercent]="yPercent + stackCardYOffsets[$index]"
-  [hide]="$index < MAX_NUMBER_OF_CARDS_IN_STACK - heightOfStack()"
-></app-card>
+@for (item of MAX_CARDS_ARR; track $index) {
+  <app-card
+    [xPercent]="xPercent() - stackCardXOffsets[$index]"
+    [yPercent]="yPercent() + stackCardYOffsets[$index]"
+    [hide]="$index < MAX_NUMBER_OF_CARDS_IN_STACK - heightOfStack()"
+    angleDegrees="0"
+  ></app-card>
 }

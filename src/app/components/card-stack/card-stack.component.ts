@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
 import { CardComponent } from '../card/card.component';
 
 @Component({
@@ -17,26 +22,21 @@ export class CardStackComponent {
     ...Array(this.MAX_NUMBER_OF_CARDS_IN_STACK).keys(),
   ].reverse();
 
-  heightOfStack = signal<number>(0);
+  heightOfStack = computed<number>(() => {
+    return (
+      1 +
+      Math.floor(
+        ((this.numberOfCards() || 0) - 1) / this.CARDS_PER_RENDERED_CARD
+      )
+    );
+  });
 
   readonly stackCardXOffsets = this.MAX_CARDS_ARR.map((value) => value * 0.075);
   readonly stackCardYOffsets = this.MAX_CARDS_ARR.map((value) => value * 0.25);
 
-  constructor() // private changeDetection: ChangeDetectorRef
-  {}
+  constructor() {}
 
-  @Input()
-  set numberOfCards(newValue: number | undefined) {
-    const newHeight =
-      1 + Math.floor(((newValue || 0) - 1) / this.CARDS_PER_RENDERED_CARD);
-    if (newHeight !== this.heightOfStack()) {
-      this.heightOfStack.set(newHeight);
-    }
-    // this.changeDetection.detectChanges();
-  }
-
-  @Input()
-  xPercent: number = 50;
-  @Input()
-  yPercent: number = 50;
+  public numberOfCards = input<number>();
+  public xPercent = input(50);
+  public yPercent = input(50);
 }

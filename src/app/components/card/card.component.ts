@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { CARD_BACK } from '../../models/constants';
 
 @Component({
@@ -7,16 +7,17 @@ import { CARD_BACK } from '../../models/constants';
   styleUrl: './card.component.scss',
 })
 export class CardComponent {
-  @Input()
-  public whichCard?: string = CARD_BACK;
-  @Input()
-  public xPercent: number = 50;
-  @Input()
-  public yPercent: number = 50;
-  @Input()
-  public zIndex: number = 1;
-  @Input()
-  public angleDegrees: number = 0;
-  @Input()
-  public hide?: boolean;
+  public whichCard = input(CARD_BACK);
+  public faceUp = input(false);
+  public xPercent = input.required({ transform: (value) => value ?? 50 });
+  public yPercent = input.required({ transform: (value) => value ?? 50 });
+  public zIndex = input(1);
+  public angleDegrees = input.required({ transform: (value) => value ?? 0 });
+  public hide = input<boolean | undefined>(false);
+  public whichCardToShow = computed(() => {
+    if (this.hide()) {
+      return CARD_BACK;
+    }
+    return this.whichCard();
+  });
 }

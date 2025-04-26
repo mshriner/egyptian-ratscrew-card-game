@@ -8,16 +8,20 @@ export type DealAnimationState =
   | 'dealtToPlayer1'
   | 'dealtToPlayer2'
   | 'dealtToPlayer3'
-  | 'dealtToPlayer4';
+  | 'dealtToPlayer4'
+  | 'flipPlayer1'
+  | 'flipPlayer2'
+  | 'flipPlayer3'
+  | 'flipPlayer4';
 
-export const DEAL_CARDS_ANIMATION_STYLE = '100ms ease-out';
+export const DEAL_CARDS_ANIMATION_STYLE = '50ms ease-out';
+export const PLAYER_FLIP_ANUMATION_STYLE = '400ms ease-out';
 
 export const DEAL_CARDS_2_PLAYERS: DealAnimationState[] = [
   ...makeRepeated<DealAnimationState>(
     ['centered', 'dealtToPlayer1', 'centered', 'dealtToPlayer3'],
     26
   ),
-  'centered',
   'hidden',
 ];
 
@@ -35,7 +39,6 @@ export const DEAL_CARDS_3_PLAYERS: DealAnimationState[] = [
   ),
   'centered',
   'dealtToPlayer1',
-  'centered',
   'hidden',
 ];
 
@@ -53,6 +56,5 @@ export const DEAL_CARDS_4_PLAYERS: DealAnimationState[] = [
     ],
     13
   ),
-  'centered',
   'hidden',
 ];

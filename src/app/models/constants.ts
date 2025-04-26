@@ -1,4 +1,4 @@
-import { CardInfo } from './card';
+import { CardStack } from './card';
 
 export const APP_NAME = 'Egyptian Ratscrew';
 
@@ -16,37 +16,32 @@ export const CARDS = ['c', 'd', 'h', 's'].flatMap((suit) =>
 
 console.log(CARDS);
 
-export const PLAYERS: CardInfo[] = [
+export const PLAYERS: CardStack[] = [
   {
     // dummy card / starting deck
     // keep this card hidden (after dealing) to make player indexes more intuitive,
     xPercent: 50,
     yPercent: 50,
-    angleDegrees: 0,
-    numberOfCards: 52,
+    cards: [],
   },
   {
     xPercent: 50,
     yPercent: 85,
-    angleDegrees: 0,
-    numberOfCards: 0, // Player 1 (you)
+    cards: [], // Player 1 (you)
   },
   {
     xPercent: 10,
     yPercent: 50,
-    angleDegrees: 0,
-    numberOfCards: 0, // Player 2
+    cards: [], // Player 2
   },
   {
     xPercent: 50,
     yPercent: 15,
-    angleDegrees: 0,
-    numberOfCards: 0, // Player 3 (or 2 in 2 player game)
+    cards: [], // Player 3 (or 2 in 2 player game)
   },
   {
     xPercent: 90,
     yPercent: 50,
-    angleDegrees: 0,
-    numberOfCards: 0, // Player 4
+    cards: [], // Player 4
   },
 ];

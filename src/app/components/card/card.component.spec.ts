@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CardComponent } from './card.component';
 
 describe('CardComponent', () => {
@@ -15,6 +14,9 @@ describe('CardComponent', () => {
     fixture = TestBed.createComponent(CardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    fixture.componentRef.setInput('xPercent', 50);
+    fixture.componentRef.setInput('yPercent', 50);
+    fixture.componentRef.setInput('angleDegrees', 30);
   });
 
   it('should create', () => {

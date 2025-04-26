@@ -1,7 +1,14 @@
-export interface CardInfo {
+export interface CardStack {
+  xPercent: number;
+  yPercent: number;
+  cards: PlayingCard[];
+}
+
+export interface PlayingCard {
   xPercent: number;
   yPercent: number;
   angleDegrees: number;
-  whichCard?: string;
-  numberOfCards: number;
+  faceUp?: boolean;
+  hide?: boolean;
+  whichCard: string;
 }

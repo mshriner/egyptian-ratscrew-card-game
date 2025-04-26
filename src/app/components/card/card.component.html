@@ -1,13 +1,15 @@
-@if (whichCard) {
-<img
-  class="card"
-  width="84"
-  height="122"
-  [src]="'/svg-cards/' + whichCard + '.svg'"
-  [style.left.%]="xPercent"
-  [style.top.%]="yPercent"
-  [style.zIndex]="zIndex"
-  [style.transform]="'translate(-50%, -50%) rotate(' + angleDegrees + 'deg)'"
-  [style.display]="hide ? 'none' : 'block'"
-/>
+@if (whichCard()) {
+  <img
+    class="card"
+    width="84"
+    height="122"
+    [src]="'/svg-cards/' + whichCardToShow() + '.svg'"
+    [style.left.%]="xPercent()"
+    [style.top.%]="yPercent()"
+    [style.zIndex]="zIndex()"
+    [style.transform]="
+      'translate(-50%, -50%) rotate(' + angleDegrees() + 'deg)'
+    "
+    [style.display]="hide() ? 'none' : 'block'"
+  />
 }

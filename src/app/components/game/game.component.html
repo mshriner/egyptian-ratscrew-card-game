@@ -1,36 +1,41 @@
 <div id="game-canvas" class="game-canvas" #gameCanvas>
   @for (card of CARDS; track $index) {
-  <img
-    class="fixed"
-    [ngSrc]="'/svg-cards/' + card + '.svg'"
-    width="168"
-    height="244"
-    priority
-    hidden
-  />
+    <img
+      class="fixed"
+      [ngSrc]="'/svg-cards/' + card + '.svg'"
+      width="168"
+      height="244"
+      priority
+      hidden
+    />
   }
 
   {{ players | json }}
+  <br />
+  {{ cardAnimation() }}
+  <br />
+  {{ animationCard() | json }}
 
   <app-card
-    whichCard=""
-    #animationCard
+    xPercent="50"
+    yPercent="50"
+    angleDegrees="0"
+    [faceUp]="false"
+    [hide]="animationCard().hide"
     [@cardMove]="cardAnimation()"
-    (@cardMove.done)="nextDeal($event)"
+    (@cardMove.start)="cardAnimationStart($event)"
+    (@cardMove.done)="cardAnimationDone($event)"
   ></app-card>
 
-  @for (cardInPile of cardsInPile; track $index) {
-  <app-card
-    [xPercent]="cardInPile.xPercent"
-    [yPercent]="cardInPile.yPercent"
-    [angleDegrees]="cardInPile.angleDegrees"
-    [whichCard]="cardInPile.whichCard"
-  ></app-card>
-  } @for (player of players; track $index) {
-  <app-card-stack
-    [xPercent]="player.xPercent"
-    [yPercent]="player.yPercent"
-    [numberOfCards]="player.numberOfCards"
-  ></app-card-stack>
+  @for (cardInPile of cardsInPileBottomToTop; track $index) {
+    <app-card
+      [xPercent]="cardInPile.xPercent"
+      [yPercent]="cardInPile.yPercent"
+      [angleDegrees]="cardInPile.angleDegrees"
+      [whichCard]="cardInPile.whichCard"
+    ></app-card>
+  }
+  @for (player of players; track $index) {
+    <app-player [player]="player" [playerNumber]="$index"></app-player>
   }
 </div>
