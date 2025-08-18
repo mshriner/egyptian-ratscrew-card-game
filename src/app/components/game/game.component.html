@@ -1,5 +1,5 @@
 <div id="game-canvas" class="game-canvas" #gameCanvas>
-  @for (card of CARDS; track $index) {
+  @for (card of gameService.CARDS; track $index) {
     <img
       class="fixed"
       [ngSrc]="'/svg-cards/' + card + '.svg'"
@@ -10,24 +10,32 @@
     />
   }
 
-  {{ players | json }}
+  Player {{ gameService.playerTurn() }}'s turn
   <br />
-  {{ cardAnimation() }}
+  {{ gameService.gamePhase() }}
   <br />
-  {{ animationCard() | json }}
+  {{ gameService.cardAnimation() }}
+  <br />
+  {{ gameService.animationCard() | json }}
+  <br />
+  {{ gameService.slaps() | json }}
+  <br />
+  {{ gameService.isPileSlappable() | json }}
+  <br />
+  {{ gameService.cardsInPileBottomToTop | json }}
 
   <app-card
     xPercent="50"
     yPercent="50"
     angleDegrees="0"
     [faceUp]="false"
-    [hide]="animationCard().hide"
-    [@cardMove]="cardAnimation()"
-    (@cardMove.start)="cardAnimationStart($event)"
-    (@cardMove.done)="cardAnimationDone($event)"
+    [hide]="gameService.animationCard().hide"
+    [@cardMove]="gameService.cardAnimation()"
+    (@cardMove.start)="gameService.cardAnimationStart($event)"
+    (@cardMove.done)="gameService.cardAnimationDone($event)"
   ></app-card>
 
-  @for (cardInPile of cardsInPileBottomToTop; track $index) {
+  @for (cardInPile of gameService.cardsInPileBottomToTop; track $index) {
     <app-card
       [xPercent]="cardInPile.xPercent"
       [yPercent]="cardInPile.yPercent"
@@ -35,7 +43,7 @@
       [whichCard]="cardInPile.whichCard"
     ></app-card>
   }
-  @for (player of players; track $index) {
+  @for (player of gameService.players; track $index) {
     <app-player [player]="player" [playerNumber]="$index"></app-player>
   }
 </div>

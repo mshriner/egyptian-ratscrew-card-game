@@ -4,3 +4,8 @@ export enum GameState {
   WIN = 'win',
   LOSE = 'lose',
 }
+
+export interface SlappableState {
+  doubles: boolean;
+  sandwich: boolean;
+}

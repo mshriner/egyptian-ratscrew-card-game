@@ -20,7 +20,7 @@ export const PLAYER_FLIP_ANUMATION_STYLE = '400ms ease-out';
 export const DEAL_CARDS_2_PLAYERS: DealAnimationState[] = [
   ...makeRepeated<DealAnimationState>(
     ['centered', 'dealtToPlayer1', 'centered', 'dealtToPlayer3'],
-    26
+    26,
   ),
   'hidden',
 ];
@@ -35,7 +35,7 @@ export const DEAL_CARDS_3_PLAYERS: DealAnimationState[] = [
       'centered',
       'dealtToPlayer3',
     ],
-    17
+    17,
   ),
   'centered',
   'dealtToPlayer1',
@@ -54,7 +54,14 @@ export const DEAL_CARDS_4_PLAYERS: DealAnimationState[] = [
       'centered',
       'dealtToPlayer4',
     ],
-    13
+    13,
   ),
   'hidden',
 ];
+
+export type HandAnimationState =
+  | 'slap'
+  | 'atPlayer1'
+  | 'atPlayer2'
+  | 'atPlayer3'
+  | 'atPlayer4';
