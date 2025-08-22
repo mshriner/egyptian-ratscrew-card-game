@@ -53,7 +53,7 @@ export class PlayerComponent implements OnInit {
       this.gameService.cardAnimation() === 'hidden'
     ) {
       this.gameService.animationCard.update((prev) => {
-        return { ...prev, hide: false };
+        return { ...prev, invisible: false };
       });
       this.gameService.cardAnimation.set('flipPlayer1');
     }

@@ -9,6 +9,6 @@ export interface PlayingCard {
   yPercent: number;
   angleDegrees: number;
   faceUp?: boolean;
-  hide?: boolean;
+  invisible?: boolean;
   whichCard: string;
 }

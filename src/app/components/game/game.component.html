@@ -29,7 +29,7 @@
     yPercent="50"
     angleDegrees="0"
     [faceUp]="false"
-    [hide]="gameService.animationCard().hide"
+    [hide]="gameService.animationCard().invisible"
     [@cardMove]="gameService.cardAnimation()"
     (@cardMove.start)="gameService.cardAnimationStart($event)"
     (@cardMove.done)="gameService.cardAnimationDone($event)"

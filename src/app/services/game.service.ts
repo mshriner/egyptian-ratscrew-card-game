@@ -121,6 +121,23 @@ export class GameService {
         }
         break;
       }
+      case GameState.PLAY: {
+        let poppedCard: PlayingCard;
+        if (event?.fromState?.includes('Player1')) {
+          poppedCard = this.players[1].cards.pop()!;
+        } else if (event?.fromState?.includes('Player2')) {
+          poppedCard = this.players[2].cards.pop()!;
+        } else if (event?.fromState?.includes('Player3')) {
+          poppedCard = this.players[3].cards.pop()!;
+        } else if (event?.fromState?.includes('Player4')) {
+          poppedCard = this.players[4].cards.pop()!;
+        } else {
+          throw new Error('Invalid player turn');
+        }
+        this.animationCard.update(() => {
+          return { ...poppedCard, faceUp: false, invisible: false };
+        });
+      }
     }
   }
 
@@ -154,25 +171,14 @@ export class GameService {
         if (event?.toState?.includes('Player')) {
           this.cardAnimation.set('centered');
         } else if (event?.fromState?.includes('Player')) {
-          let poppedCard: PlayingCard;
-          if (event?.fromState?.includes('Player1')) {
-            poppedCard = this.players[1].cards.pop()!;
-          } else if (event?.fromState?.includes('Player2')) {
-            poppedCard = this.players[2].cards.pop()!;
-          } else if (event?.fromState?.includes('Player3')) {
-            poppedCard = this.players[3].cards.pop()!;
-          } else if (event?.fromState?.includes('Player4')) {
-            poppedCard = this.players[4].cards.pop()!;
-          } else {
-            throw new Error('Invalid player turn');
-          }
+          let poppedCard: PlayingCard = this.animationCard();
 
           poppedCard.angleDegrees = Math.floor(Math.random() * 360);
           poppedCard.xPercent = Math.floor(50 + (Math.random() - 0.5) * 4);
           poppedCard.yPercent = Math.floor(50 + (Math.random() - 0.5) * 4);
           this.cardsInPileBottomToTop.push(poppedCard);
           this.animationCard.update((prev) => {
-            return { ...prev, hide: true };
+            return { ...prev, invisible: true };
           });
           this.cardAnimation.set('hidden');
         }
